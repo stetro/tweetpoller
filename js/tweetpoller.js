@@ -4,6 +4,13 @@ Tweetpoller loads new tweets from timeline
 Settings:
     time    ->  pollinginterval
     user_id ->  Twitter-User ID     -> http://www.idfromuser.com/
+    
+Author : Steffen Troester
+
+TODO:   - Naviagtion
+        - Testing
+
+    
 */
 
 // class Tweetpoller setup with args
