@@ -44,15 +44,17 @@ function Tweetpoller(args, element) {
 Tweetpoller.prototype.load_timeline = function() {
     var _object = this; // reference for callback methode
     // jQuery Callback for cross-scripting
-    var url = "http://api.twitter.com/1/statuses/user_timeline.json?user_id=" + this.tweetpoller_setup.user_id + "&count=" + this.tweetpoller_setup.count + "&callback=?";
+    var url = "http://api.twitter.com/1/statuses/user_timeline.json?user_id=" + 
+    this.tweetpoller_setup.user_id + "&count=" + this.tweetpoller_setup.count + 
+    "&callback=?";
     // load JSON file from twitter API
     jQuery.getJSON(url, function(data) {
         // empty the tweetarea
         jQuery(_object.tweetpoller_setup.element).empty();
         // go through all tweets
         jQuery.each(data, function(key) {
-            // print all tweets
-            _object.print_tweet(data[key]);
+            // print all tweets ( false->append )
+            _object.print_tweet(data[key], false);
         });
         // show tweets via slideDown()
         jQuery(_object.tweetpoller_setup.element).find(".tweet").slideDown();
@@ -65,7 +67,9 @@ Tweetpoller.prototype.load_timeline = function() {
 Tweetpoller.prototype.check_timeline = function() {
     var _object = this; // reference for callback methode
     // jQuery Callback for cross-scripting
-    var url = "http://api.twitter.com/1/statuses/user_timeline.json?user_id=" + this.tweetpoller_setup.user_id + "&since_id=" + this.tweetpoller_setup.since_id + "&callback=?";
+    var url = "http://api.twitter.com/1/statuses/user_timeline.json?user_id=" + 
+    this.tweetpoller_setup.user_id + "&since_id=" + 
+    this.tweetpoller_setup.since_id + "&callback=?";
     // load JSON file from twitter API
     jQuery.getJSON(url, function(data) {
         // go through all tweets
@@ -97,21 +101,24 @@ jQuery.fn.tweetpoller = function(args) {
     tp.load_timeline();
 };
 
-// echo Tweet
+// echo Tweet (dir=true -> prepand())
 Tweetpoller.prototype.print_tweet = function(tweet, dir) {
     // parse datetime 
     var date = new Date(tweet.created_at);
     // generate tweetitem
-    var tweet_form = '<li class="tweet">' + tweet.text + '<div class="datum">' + date + '</li></li>';
+    var tweet_form = '<li class="tweet">' + tweet.text + '<div class="datum">' + 
+    date + '</li></li>';
     // chose prepend or append
-    if (dir !== null || dir) {
-        jQuery(this.tweetpoller_setup.element).append(tweet_form);
-    }
-    else {
+    if (dir===true) {
+        
         jQuery(this.tweetpoller_setup.element).prepend(tweet_form);
     }
+    else {
+        jQuery(this.tweetpoller_setup.element).append(tweet_form);
+    }
     // remember last tweet with highest tweet_id
-    if (tweet.id > this.tweetpoller_setup.since_id) {
-        this.tweetpoller_setup.since_id = tweet.id;
+    if (parseInt(tweet.id_str,10) >= this.tweetpoller_setup.since_id) {
+        this.tweetpoller_setup.since_id = parseInt(tweet.id_str,10);
+        alert(parseInt(tweet.id_str,10));
     }
 };
