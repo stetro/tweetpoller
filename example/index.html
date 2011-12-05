@@ -1,0 +1,38 @@
+<html>
+	<head>
+		<title>Tweetpoller Test</title>
+		<script type="text/javascript" charset="utf-8" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+        <script type="text/javascript" charset="utf-8" src="js/tweetpoller.js"></script>
+        
+		<script type="text/javascript" charset="utf-8">
+		// <![CDATA[
+	$(function(){
+		$("#twitter-tweets").tweetpoller(
+            {"user_id": 36389625,
+             "time":    5000}
+        );
+	});
+		// ]]>
+		</script>
+		
+		<link rel="stylesheet" href="example/style.css" type="text/css" media="screen" charset="utf-8" />
+		
+	</head>
+	<body>
+	<div id="twitter-container">
+		<img src="twitter.png" alt="Twitter-Logo" id="twitter-logo" width="70"/>
+		<div id="twitter">
+			<div id="twitter-loader"></div>
+			<div id="twitter-top">
+				&nbsp;
+			</div>
+			<ul id="twitter-tweets">
+				<li>Tweets werden geladen</li>
+			</ul>
+			<div id="twitter-bottom">
+				<a href="#" id="twitter-prev">&auml;ltere Tweets ...</a>
+			</div>
+		</div>
+	</div>
+	</body>
+</html>

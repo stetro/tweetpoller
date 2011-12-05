@@ -1,0 +1,82 @@
+body{    
+	font: 12px/1.5 'Helvetica Neue', Arial, 'Liberation Sans', FreeSans, sans-serif;
+}
+#twitter-container{
+	position:relative;
+	width:300px;
+}
+#twitter-container img{
+	z-index:0;
+}
+#twitter{
+	margin:40px 15px 15px 15px;
+	padding:0px;
+	width:270px;
+	color: #222;
+	border:7px solid #33ccff;
+	background-color:#33ccff;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+	-moz-box-shadow: 0 0 5px #999;
+	-webkit-box-shadow: 0 0 5px #999;
+	box-shadow: 0 0 5px #999;
+	position:absolute;
+	top:0px;
+	left:0px;
+	z-index:1;
+}
+#twitter-top,#twitter-bottom{
+	height:20px;
+	text-align:center;
+	background-color:#ebebeb;
+}
+#twitter-top{
+	-webkit-border-top-left-radius: 7px;
+	-webkit-border-top-right-radius: 7px;
+	-moz-border-radius-topleft: 7px;
+	-moz-border-radius-topright: 7px;
+	border-top-left-radius: 7px;
+	border-top-right-radius: 7px;
+}
+#twitter-bottom{
+	-webkit-border-bottom-right-radius: 7px;
+	-webkit-border-bottom-left-radius: 7px;
+	-moz-border-radius-bottomright: 7px;
+	-moz-border-radius-bottomleft: 7px;
+	border-bottom-right-radius: 7px;
+	border-bottom-left-radius: 7px;
+	border-top:1px solid #33ccff;
+}
+#twitter-tweets{
+	padding:0px;
+    margin:0px;
+	background-color:#ebebeb;
+}
+#twitter-tweets ul{
+	padding:0px;
+	margin:0px;				
+}
+#twitter-tweets li{
+	border-top:1px solid #33ccff;
+	padding:10px;
+	margin:0px;
+	list-style:none;
+    display:none;
+}
+#twitter-logo{
+	position: absolute;
+	right:14px;
+	top:-9px;
+}
+.datum{
+	color: #83b8d7;
+	font-size: 0.9em;
+}
+a:link{
+	text-decoration: none;
+	color:#444;
+}
+a:visited{color:#444}
+a:hover{color:#000}
+a:active{color:#444}
