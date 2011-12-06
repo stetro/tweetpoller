@@ -16,7 +16,8 @@ function Tweetpoller(args, element) {
     this.tweetpoller_setup = {
         "time": 20000,          // pollingintervall
         "element": element,     // selected ul element for tweets (li)
-        "user_id": 1,           // user_id to load from
+        "filter_value": "0",    // user_id to load from
+        "filter_attr":"user_id",// filter attr like 'screen_name' or 'user_id'
         "since_id": "0",        // to load new items
         "count": 10,            // max viewed tweets
         "fade_last_out":true,   // keep max viewed tweet, fading out the last tweet
@@ -29,8 +30,11 @@ function Tweetpoller(args, element) {
         if (setting == "time" && !isNaN(args.time)) {
             this.tweetpoller_setup.time = args.time;
         }
-        if (setting == "user_id" && !isNaN(args.user_id)) {
-            this.tweetpoller_setup.user_id = args.user_id;
+        if (setting == "filter_attr" ) {
+            this.tweetpoller_setup.filter_attr = args.filter_attr;
+        }
+        if (setting == "filter_value" ) {
+            this.tweetpoller_setup.filter_value = args.filter_value;
         }
         if (setting == "count" && !isNaN(args.count)) {
             this.tweetpoller_setup.count = args.count;
@@ -55,8 +59,9 @@ function Tweetpoller(args, element) {
 Tweetpoller.prototype.load_timeline = function() {
     var _object = this; // reference for callback methode
     // jQuery Callback for cross-scripting
-    var url = "http://api.twitter.com/1/statuses/user_timeline.json?user_id=" + 
-    this.tweetpoller_setup.user_id + "&count=" + this.tweetpoller_setup.count + 
+    var url = "http://api.twitter.com/1/statuses/user_timeline.json?"+
+    this.tweetpoller_setup.filter_attr+"=" + 
+    this.tweetpoller_setup.filter_value + "&count=" + this.tweetpoller_setup.count + 
     "&callback=?";
     // load JSON file from twitter API
     jQuery.getJSON(url, function(data) {
@@ -95,8 +100,9 @@ Tweetpoller.prototype.load_timeline = function() {
 Tweetpoller.prototype.check_timeline = function() {
     var _object = this; // reference for callback methode
     // jQuery Callback for cross-scripting
-    var url = "http://api.twitter.com/1/statuses/user_timeline.json?user_id=" + 
-    this.tweetpoller_setup.user_id + "&since_id=" + 
+    var url = "http://api.twitter.com/1/statuses/user_timeline.json?"+
+    this.tweetpoller_setup.filter_attr+"=" + 
+    this.tweetpoller_setup.filter_value + "&since_id=" + 
     this.tweetpoller_setup.since_id + "&callback=?";
     // load JSON file from twitter API
     jQuery.getJSON(url, function(data) {
