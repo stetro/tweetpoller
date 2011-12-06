@@ -6,10 +6,6 @@ Settings:
     user_id ->  Twitter-User ID     -> http://www.idfromuser.com/
     
 Author : Steffen Troester
-
-TODO:   - Naviagtion
-        - Testing
-
     
 */
 
@@ -18,12 +14,14 @@ TODO:   - Naviagtion
 function Tweetpoller(args, element) {
     // basic settings
     this.tweetpoller_setup = {
-        "time": 5000,
-        "element": element,
-        "user_id": 1,
-        "since_id": "0",
-        "count": 10,
-        "fade_last_out":true
+        "time": 20000,          // pollingintervall
+        "element": element,     // selected ul element for tweets (li)
+        "user_id": 1,           // user_id to load from
+        "since_id": "0",        // to load new items
+        "count": 10,            // max viewed tweets
+        "fade_last_out":true,   // keep max viewed tweet, fading out the last tweet
+        "read_more_link": true,  // Show link for more
+        "read_more_link_text" : "show more on twitter"
     };
 
     // check and validate attributes
@@ -39,7 +37,15 @@ function Tweetpoller(args, element) {
         }
         if(setting == "fade_last_out")
         {
-            this.tweetpoller_setup.fade_last_out = (agrs.fade_last_out === true);
+            this.tweetpoller_setup.fade_last_out = (args.fade_last_out === true);
+        }
+        if(setting == "read_more_link")
+        {
+            this.tweetpoller_setup.read_more_link = (args.read_more_link === true);
+        }
+        if(setting == "read_more_link_text")
+        {
+            this.tweetpoller_setup.read_more_link_text = args.read_more_link_text;
         }
     }
 }
@@ -54,6 +60,23 @@ Tweetpoller.prototype.load_timeline = function() {
     "&callback=?";
     // load JSON file from twitter API
     jQuery.getJSON(url, function(data) {
+        // if data is empty
+        if(data.length === 0)
+        {
+            return 0;   // ERROR
+        }
+        // add read_more - link if setting is set
+        if(_object.tweetpoller_setup.read_more_link === true){
+            // load screenname from first tweet
+            var screen_name = data[0].user.screen_name;
+            // get link_text
+            var url_text = _object.tweetpoller_setup.read_more_link_text;
+            // generate url element
+            var more_link = '<div id="twitter-bottom"><a href="http://twitter.com/'+
+                            screen_name+'">'+url_text+'</a></div>';
+            // append after ul "element"
+            jQuery(_object.tweetpoller_setup.element).after(more_link);
+        }
         // empty the tweetarea
         jQuery(_object.tweetpoller_setup.element).empty();
         // go through all tweets
@@ -110,9 +133,11 @@ jQuery.fn.tweetpoller = function(args) {
 Tweetpoller.prototype.print_tweet = function(tweet, dir) {
     // parse datetime 
     var date = new Date(tweet.created_at);
+    var format_date = date.getDay().pad(2)+"."+date.getMonth().pad(2)+"."+date.getFullYear()+
+    " - "+date.getHours().pad(2)+":"+date.getMinutes().pad(2)+":"+date.getSeconds().pad(2);
     // generate tweetitem
     var tweet_form = '<li class="tweet">' + tweet.text + '<div class="datum">' + 
-    date + '</li></li>';
+    format_date + '</li></li>';
     // chose prepend or append
     if (dir===true) {
         jQuery(this.tweetpoller_setup.element).prepend(tweet_form);
@@ -130,4 +155,9 @@ Tweetpoller.prototype.print_tweet = function(tweet, dir) {
     if ((tweet.id_str) > this.tweetpoller_setup.since_id) {
         this.tweetpoller_setup.since_id = tweet.id_str;
     }
+};
+
+// extends Number prototype with pad() - fill in zeros
+Number.prototype.pad = function (len) {
+    return (new Array(len+1).join("0") + this).slice(-len);
 };
