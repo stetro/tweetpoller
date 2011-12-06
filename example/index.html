@@ -9,7 +9,8 @@
 	$(function(){
 		$("#twitter-tweets").tweetpoller(
             {"user_id": 36389625,
-             "time":    5000}
+             "time":    20*1000,
+             "count" : 5}
         );
 	});
 		// ]]>
@@ -22,16 +23,9 @@
 	<div id="twitter-container">
 		<img src="twitter.png" alt="Twitter-Logo" id="twitter-logo" width="70"/>
 		<div id="twitter">
-			<div id="twitter-loader"></div>
-			<div id="twitter-top">
-				&nbsp;
-			</div>
 			<ul id="twitter-tweets">
-				<li>Tweets werden geladen</li>
+				<li>Tweets werden geladen<img src="load.gif"/></li>
 			</ul>
-			<div id="twitter-bottom">
-				<a href="#" id="twitter-prev">&auml;ltere Tweets ...</a>
-			</div>
 		</div>
 	</div>
 	</body>

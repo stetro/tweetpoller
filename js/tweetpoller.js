@@ -110,8 +110,10 @@ Tweetpoller.prototype.print_tweet = function(tweet, dir) {
     date + '</li></li>';
     // chose prepend or append
     if (dir===true) {
-        
         jQuery(this.tweetpoller_setup.element).prepend(tweet_form);
+        jQuery(this.tweetpoller_setup.element).find("li:last").slideUp(function(){
+            $(this).remove();
+        });
     }
     else {
         jQuery(this.tweetpoller_setup.element).append(tweet_form);
@@ -119,6 +121,5 @@ Tweetpoller.prototype.print_tweet = function(tweet, dir) {
     // remember last tweet with highest tweet_id
     if (parseInt(tweet.id_str,10) >= this.tweetpoller_setup.since_id) {
         this.tweetpoller_setup.since_id = parseInt(tweet.id_str,10);
-        alert(parseInt(tweet.id_str,10));
     }
 };
