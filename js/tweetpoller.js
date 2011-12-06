@@ -21,8 +21,9 @@ function Tweetpoller(args, element) {
         "time": 5000,
         "element": element,
         "user_id": 1,
-        "since_id": 0,
-        "count": 10
+        "since_id": "0",
+        "count": 10,
+        "fade_last_out":true
     };
 
     // check and validate attributes
@@ -35,6 +36,10 @@ function Tweetpoller(args, element) {
         }
         if (setting == "count" && !isNaN(args.count)) {
             this.tweetpoller_setup.count = args.count;
+        }
+        if(setting == "fade_last_out")
+        {
+            this.tweetpoller_setup.fade_last_out = (agrs.fade_last_out === true);
         }
     }
 }
@@ -111,15 +116,18 @@ Tweetpoller.prototype.print_tweet = function(tweet, dir) {
     // chose prepend or append
     if (dir===true) {
         jQuery(this.tweetpoller_setup.element).prepend(tweet_form);
-        jQuery(this.tweetpoller_setup.element).find("li:last").slideUp(function(){
-            $(this).remove();
-        });
+        if(this.tweetpoller_setup.fade_last_out===true)
+        {
+            jQuery(this.tweetpoller_setup.element).find("li:last").slideUp(function(){
+                $(this).remove();
+            });
+        }
     }
     else {
         jQuery(this.tweetpoller_setup.element).append(tweet_form);
     }
     // remember last tweet with highest tweet_id
-    if (parseInt(tweet.id_str,10) >= this.tweetpoller_setup.since_id) {
-        this.tweetpoller_setup.since_id = parseInt(tweet.id_str,10);
+    if ((tweet.id_str) > this.tweetpoller_setup.since_id) {
+        this.tweetpoller_setup.since_id = tweet.id_str;
     }
 };
