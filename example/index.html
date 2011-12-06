@@ -8,7 +8,8 @@
 		// <![CDATA[
 	$(function(){
 		$("#twitter-tweets").tweetpoller(
-            {"q": "@stetro",
+            {"filter_value": "stetro",
+            "filter_attr": "screen_name",
              "time":    20*1000,
              "count" : 7,
              "read_more_link_text" : "Mehr Tweets ..."
