@@ -1,18 +1,35 @@
-# README for a newly created project.
+#Tweetpoller - jQuery Plugin
 
-There are a couple of things you should do first, before you can use all of Git's power:
+##About
 
-  * Add a remote to this project: in the Cloud9 IDE command line, you can execute the following commands
-    `git remote add [remote name] [remote url (eg. 'git@github.com:/ajaxorg/node_chat')]` [Enter]
-  * Create new files inside your project
-  * Add them to to Git by executing the following command
-    `git add [file1, file2, file3, ...]` [Enter]
-  * Create a commit which can be pushed to the remote you just added
-    `git commit -m 'added new files'` [Enter]
-  * Push the commit the remote
-    `git push [remote name] master` [Enter]
+This jQuery Plugin load a number of tweets from the Twitter API and displays them in a HTML list (<li>). It also updates every n seconds and place new tweets at the top of list.
 
-That's it! If this doesn't work for you, please visit the excellent resources from [Github.com](http://help.github.com) and the [Pro Git](http://http://progit.org/book/) book.
-If you can't find your answers there, feel free to ask us via Twitter (@cloud9ide), [mailing list](groups.google.com/group/cloud9-ide) or IRC (#cloud9ide on freenode).
+##Usage
 
-Happy coding!
+Select an <ul> Element in DOM and use tweetpoller() methode.
+Exsample:
+
+```javascript
+$(function(){
+	$("#twitter-tweets").tweetpoller(
+        {
+        "filter_value"          :   "TAGESSCHAU",
+        "filter_attr"           :   "screen_name",
+        "time"                  :   20*1000,
+        "count"                 :   7,
+        "read_more_link_text"   :   "Mehr Tweets ..."
+        }
+    );
+});
+```
+
+### Parameter
+* **filter_attr** - Twitter API attribute like 'screen_name' or 'user_id'
+* **filter_value** - Twitter API attribute value (Twitter Account)
+* **time** - polling interval in ms
+* **count** - how many tweets are seen
+* **read_more_link** - (boolean) if a "Read More ..." link appends after the <ul>
+* **read_more_link_text** - text for link like "Read More ..."
+* **fade_last_out** - (boolean) fade out last if new tweets are available
+
+

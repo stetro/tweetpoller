@@ -2,10 +2,25 @@
 Tweetpoller loads new tweets from timeline
 
 Settings:
-    time    ->  pollinginterval
-    user_id ->  Twitter-User ID     -> http://www.idfromuser.com/
+        ->  time
+            // pollingintervall
+        ->  element
+            // selected ul element for tweets (li)
+        ->  filter_value
+            // user_id to load from
+        ->  filter_attr
+            // filter attr like 'screen_name' or 'user_id'
+        ->  count
+            // max viewed tweets
+        ->  fade_last_out
+            // keep max viewed tweet, fading out the last tweet
+        ->  read_more_link
+            // show link for more
+        ->  read_more_link_text
+            // linktext for more
     
-Author : Steffen Troester
+Author : Steffen Troester (stetro)
+Website: stetro.wordpress.com
     
 */
 
@@ -29,8 +44,9 @@ function Tweetpoller(args, element) {
         "fade_last_out": true,
         // keep max viewed tweet, fading out the last tweet
         "read_more_link": true,
-        // Show link for more
+        // show link for more
         "read_more_link_text": "show more on twitter"
+        // linktext for more
     };
 
     // check and validate attributes
@@ -136,12 +152,15 @@ jQuery.fn.tweetpoller = function(args) {
 Tweetpoller.prototype.print_tweet = function(tweet, dir) {
     // parse datetime 
     var date = new Date(tweet.created_at);
+    // generate d.m.Y h:i:s
     var format_date = date.getDay().pad(2) + "." + date.getMonth().pad(2) + "." + date.getFullYear() + " - " + date.getHours().pad(2) + ":" + date.getMinutes().pad(2) + ":" + date.getSeconds().pad(2);
     // generate tweetitem
     var tweet_form = '<li class="tweet">' + tweet.text + '<div class="datum">' + format_date + '</li></li>';
     // chose prepend or append
     if (dir === true) {
+        //prepand tweet
         jQuery(this.tweetpoller_setup.element).prepend(tweet_form);
+        // remove last item if fade_last_out setting is true
         if (this.tweetpoller_setup.fade_last_out === true) {
             jQuery(this.tweetpoller_setup.element).find("li:last").slideUp('fast', function() {
                 $(this).remove();
@@ -149,6 +168,7 @@ Tweetpoller.prototype.print_tweet = function(tweet, dir) {
         }
     }
     else {
+        // append tweet
         jQuery(this.tweetpoller_setup.element).append(tweet_form);
     }
     // remember last tweet with highest tweet_id
