@@ -6,8 +6,14 @@ This jQuery Plugin load a number of tweets from the Twitter API and displays the
 
 ##Usage
 
-Select an <ul> Element in DOM and use tweetpoller() methode.
+Select an ul Element in DOM and use tweetpoller() methode.
 Exsample:
+
+```html
+    <ul id="twitter-tweets">
+        <li>loading ...</li>
+    </ul>
+```
 
 ```javascript
 $(function(){
@@ -23,12 +29,12 @@ $(function(){
 });
 ```
 
-### Parameter
+## Parameter
 * **filter_attr** - Twitter API attribute like 'screen_name' or 'user_id'
 * **filter_value** - Twitter API attribute value (Twitter Account)
 * **time** - polling interval in ms
 * **count** - how many tweets are seen
-* **read_more_link** - (boolean) if a "Read More ..." link appends after the <ul>
+* **read_more_link** - (boolean) if a "Read More ..." link appends after the ul-Element
 * **read_more_link_text** - text for link like "Read More ..."
 * **fade_last_out** - (boolean) fade out last if new tweets are available
 
