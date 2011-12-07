@@ -2,7 +2,7 @@
 
 ##About
 
-This jQuery Plugin load a number of tweets from the Twitter API and displays them in a HTML list (<li>). It also updates every n seconds and place new tweets at the top of list.
+This jQuery Plugin load a number of tweets from the Twitter API and displays them in a HTML list (li - Element). It also updates every n seconds and place new tweets at the top of list.
 
 ##Usage
 
