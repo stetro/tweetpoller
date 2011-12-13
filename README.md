@@ -10,8 +10,8 @@ Select an ul Element in DOM and use tweetpoller() methode.
 Exsample:
 
 ```html
+    <div id="tweetpoller-loader">Loading ...</div>
     <ul id="twitter-tweets">
-        <li>loading ...</li>
     </ul>
 ```
 
@@ -23,7 +23,8 @@ $(function(){
         "filter_attr"           :   "screen_name",
         "time"                  :   20*1000,
         "count"                 :   7,
-        "read_more_link_text"   :   "Mehr Tweets ..."
+        "read_more_link_text"   :   "Mehr Tweets ...",
+        "loading_element"       :   "#tweetpoller-loader"
         }
     );
 });
@@ -37,5 +38,6 @@ $(function(){
 * **read_more_link** - (boolean) if a "Read More ..." link appends after the ul-Element
 * **read_more_link_text** - text for link like "Read More ..."
 * **fade_last_out** - (boolean) fade out last if new tweets are available
+* **loading_element** - Selektor of loading element like an image tag
 
 

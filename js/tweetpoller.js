@@ -18,6 +18,8 @@ Settings:
             // show link for more
         ->  read_more_link_text
             // linktext for more
+        ->  loading_element
+            // loading element
     
 Author : Steffen Troester (stetro)
 Website: stetro.wordpress.com
@@ -45,8 +47,12 @@ function Tweetpoller(args, element) {
         // keep max viewed tweet, fading out the last tweet
         "read_more_link": true,
         // show link for more
-        "read_more_link_text": "show more on twitter"
+        "read_more_link_text": "show more on twitter",
         // linktext for more
+        "play_sound" : false,
+        // play sound if new tweet arrived
+        "loading_element" : "#tweetpoller-loader"
+        // loading element
     };
 
     // check and validate attributes
@@ -72,6 +78,9 @@ function Tweetpoller(args, element) {
         if (setting == "read_more_link_text") {
             this.tweetpoller_setup.read_more_link_text = args.read_more_link_text;
         }
+        if(setting == "loading_element"){
+            this.tweetpoller_setup.loading_element = args.loading_element;
+        }
     }
 }
 
@@ -81,6 +90,8 @@ Tweetpoller.prototype.load_timeline = function() {
     var _object = this; // reference for callback methode
     // jQuery Callback for cross-scripting
     var url = "http://api.twitter.com/1/statuses/user_timeline.json?" + this.tweetpoller_setup.filter_attr + "=" + this.tweetpoller_setup.filter_value + "&count=" + this.tweetpoller_setup.count + "&callback=?";
+    // fadeIn loading Element 
+    $(this.tweetpoller_setup.loading_element).fadeIn();
     // load JSON file from twitter API
     jQuery.getJSON(url, function(data) {
         // if data is empty
@@ -105,6 +116,8 @@ Tweetpoller.prototype.load_timeline = function() {
             // print all tweets ( false->append )
             _object.print_tweet(data[key], false);
         });
+        // fadeOut loadingelement
+        $(_object.tweetpoller_setup.loading_element).fadeOut();
         // show tweets via slideDown()
         jQuery(_object.tweetpoller_setup.element).find(".tweet").slideDown('fast');
 
@@ -117,6 +130,8 @@ Tweetpoller.prototype.check_timeline = function() {
     var _object = this; // reference for callback methode
     // jQuery Callback for cross-scripting
     var url = "http://api.twitter.com/1/statuses/user_timeline.json?" + this.tweetpoller_setup.filter_attr + "=" + this.tweetpoller_setup.filter_value + "&since_id=" + this.tweetpoller_setup.since_id + "&callback=?";
+    // fadeIn loading Element 
+    $(this.tweetpoller_setup.loading_element).fadeIn();
     // load JSON file from twitter API
     jQuery.getJSON(url, function(data) {
         // go through all tweets
@@ -124,6 +139,8 @@ Tweetpoller.prototype.check_timeline = function() {
             // print all tweets ( true->prepand )
             _object.print_tweet(data[key], true);
         });
+        // fadeOut loading Element 
+        $(_object.tweetpoller_setup.loading_element).fadeOut();
         // slideDown hidden tweets
         jQuery(_object.tweetpoller_setup.element).find(".tweet").slideDown('fast');
 
@@ -177,7 +194,7 @@ Tweetpoller.prototype.print_tweet = function(tweet, dir) {
     }
 };
 
-// extends Number prototype with pad() - fill in zeros
+// extends Number prototype with pad() - fill in zeros 
 Number.prototype.pad = function(len) {
     return (new Array(len + 1).join("0") + this).slice(-len);
 };

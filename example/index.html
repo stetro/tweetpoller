@@ -8,11 +8,12 @@
 		// <![CDATA[
 	$(function(){
 		$("#twitter-tweets").tweetpoller(
-            {"filter_value": "TAGESSCHAU",
+            {"filter_value": "stetro",
             "filter_attr": "screen_name",
              "time":    20*1000,
              "count" : 7,
-             "read_more_link_text" : "Mehr Tweets ..."
+             "read_more_link_text" : "Mehr Tweets ...",
+             "loading_element" : "#tweetpoller-loader"
              });
 	});
 		// ]]>
@@ -23,6 +24,7 @@
 	</head>
 	<body>
 	<div id="twitter-container">
+        <div id="tweetpoller-loader">Loading ...</div>
 		<img src="twitter.png" alt="Twitter-Logo" id="twitter-logo" width="70"/>
 		<div id="twitter">
 			<ul id="twitter-tweets">
