@@ -170,7 +170,7 @@ Tweetpoller.prototype.print_tweet = function(tweet, dir) {
     // parse datetime 
     var date = new Date(tweet.created_at);
     // generate d.m.Y h:i:s
-    var format_date = date.getDay().pad(2) + "." + date.getMonth().pad(2) + "." + date.getFullYear() + " - " + date.getHours().pad(2) + ":" + date.getMinutes().pad(2) + ":" + date.getSeconds().pad(2);
+        var format_date = date.getDate().pad(2) + "." + (date.getMonth()+1).pad(2) + "." + date.getFullYear() + " - " + date.getHours().pad(2) + ":" + date.getMinutes().pad(2) + ":" + date.getSeconds().pad(2);
     // generate tweetitem
     var tweet_form = '<li class="tweet">' + tweet.text + '<div class="datum">' + format_date + '</li></li>';
     // chose prepend or append
